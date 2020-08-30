@@ -1,0 +1,12 @@
+{
+  "name": "vitGroceryShop",
+  "displayName": "vitGroceryShop",
+  "expo": {
+    "name": "vitGroceryShop",
+    "slug": "vitGroceryShop",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
