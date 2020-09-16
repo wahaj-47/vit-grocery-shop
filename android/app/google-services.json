@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "214684524092",
+    "firebase_url": "https://vitgroceryshop-9f28a.firebaseio.com",
+    "project_id": "vitgroceryshop-9f28a",
+    "storage_bucket": "vitgroceryshop-9f28a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:214684524092:android:a0cdc38110e88ae96eed39",
+        "android_client_info": {
+          "package_name": "com.vitgroceryshop"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "214684524092-46hoabe1m5259b224vnmpbtb70hpo4k5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCWGf6AsTspyATGGA5sEqbKOKKFha9CmW8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "214684524092-46hoabe1m5259b224vnmpbtb70hpo4k5.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "214684524092-00lnsganfs5tj3cv0h2rn7b4sn75erlt.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.vitgroceryshop"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

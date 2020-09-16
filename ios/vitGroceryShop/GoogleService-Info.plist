@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>214684524092-00lnsganfs5tj3cv0h2rn7b4sn75erlt.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.214684524092-00lnsganfs5tj3cv0h2rn7b4sn75erlt</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCHzVIY2hziLg72zN8hGKQ9rhrQKewnzAk</string>
+	<key>GCM_SENDER_ID</key>
+	<string>214684524092</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.vitgroceryshop</string>
+	<key>PROJECT_ID</key>
+	<string>vitgroceryshop-9f28a</string>
+	<key>STORAGE_BUCKET</key>
+	<string>vitgroceryshop-9f28a.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:214684524092:ios:26689aa55bdb96a96eed39</string>
+	<key>DATABASE_URL</key>
+	<string>https://vitgroceryshop-9f28a.firebaseio.com</string>
+</dict>
+</plist>
