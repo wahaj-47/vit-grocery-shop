@@ -16,15 +16,16 @@ import {
 } from "react-native-responsive-screen";
 import { Icon } from "../components";
 import { CartContext } from "../providers/CartProvider";
+import FastImage from "react-native-fast-image";
 
 function Product({ item }) {
 	const { item: product } = item;
 	return (
 		<View styles={styles.productContainer}>
-			<Image
+			<FastImage
 				source={{ uri: product.image }}
 				style={styles.productImage}
-			></Image>
+			></FastImage>
 			<Text style={styles.productTitle}>
 				{product.title} x {product.quantity}
 			</Text>
@@ -34,6 +35,8 @@ function Product({ item }) {
 
 export default function HamperDetails({ navigation, route }) {
 	const { item } = route.params;
+
+	console.log(item.description);
 
 	return (
 		<CartContext.Consumer>
@@ -49,7 +52,7 @@ export default function HamperDetails({ navigation, route }) {
 					<SafeAreaView>
 						<View style={styles.container}>
 							<Icon
-								color="white"
+								color="red"
 								size={35}
 								name="close"
 								family="Ionicons"
@@ -59,39 +62,32 @@ export default function HamperDetails({ navigation, route }) {
 								}}
 							></Icon>
 							<SharedElement id={`item.${item.id}.image`}>
-								<Image
+								<FastImage
 									style={{ width: "100%", height: 400, resizeMode: "cover" }}
-									source={{ uri: item.products[0].image }}
-								></Image>
+									source={{ uri: item?.image }}
+								></FastImage>
 							</SharedElement>
 							<View style={styles.hamperDescription}>
-								<Block flex row space="between">
+								<Block
+									flex
+									row
+									space="between"
+									style={{ alignItems: "center" }}
+								>
 									<SharedElement id={`item.${item.id}.title`}>
-										<Text h2 bold>
+										<Text h4 bold>
 											{item.title}
 										</Text>
 									</SharedElement>
 									<SharedElement id={`item.${item.id}.price`}>
-										<Text h2>{item.price}</Text>
+										<Text h5>£{item.price}</Text>
 									</SharedElement>
 								</Block>
 								<SharedElement id={`item.${item.id}.description`}>
-									<Text h5>{item.description}</Text>
+									<Text h6>{item.description}</Text>
 								</SharedElement>
 							</View>
-							<Block center width={wp("90%")}>
-								<Text h3 left style={styles.productContainerHeader}>
-									Products
-								</Text>
-								<FlatList
-									horizontal
-									data={item.products}
-									ItemSeparatorComponent={() => (
-										<View style={{ width: 20 }}></View>
-									)}
-									renderItem={(item, index) => <Product item={item}></Product>}
-								></FlatList>
-							</Block>
+
 							<ArButton
 								style={{ marginVertical: 30, alignSelf: "center" }}
 								onPress={() => {
@@ -134,7 +130,7 @@ const styles = StyleSheet.create({
 		color: "white",
 		alignSelf: "center",
 		fontWeight: "600",
-		fontSize: 28,
+		fontSize: 16,
 		backgroundColor: "rgba(0,0,0,0.6)",
 		padding: 10,
 	},

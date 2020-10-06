@@ -6,6 +6,9 @@ import android.net.Uri;
 
 import com.facebook.react.PackageList;
 import com.facebook.react.ReactApplication;
+import com.smarkets.paypal.RNPaypalPackage;
+import com.smarkets.paypal.RNPaypalPackage;
+import com.smarkets.paypal.RNPaypalPackage;
 import com.ijzerenhein.sharedelement.RNSharedElementPackage;
 import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.ReactNativeHost;

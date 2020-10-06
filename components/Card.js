@@ -12,6 +12,7 @@ import { SharedElement } from "react-navigation-shared-element";
 import _ from "lodash";
 
 import { argonTheme } from "../constants";
+import FastImage from "react-native-fast-image";
 
 class Card extends React.Component {
 	render() {
@@ -42,9 +43,9 @@ class Card extends React.Component {
 				<TouchableWithoutFeedback onPress={onPress}>
 					<Block flex style={imgContainer}>
 						<SharedElement id={`item.${item.id}.image`}>
-							<Image
+							<FastImage
 								source={{
-									uri: item.products[0].image,
+									uri: item.image,
 								}}
 								style={imageStyles}
 							/>
@@ -55,20 +56,22 @@ class Card extends React.Component {
 					<Block flex space="between" style={styles.cardDescription}>
 						<Block flex row space="between">
 							<SharedElement id={`item.${item.id}.title`}>
-								<Text bold h3 style={styles.cardTitle}>
+								<Text bold h4 style={styles.cardTitle}>
 									{item.title}
 								</Text>
 							</SharedElement>
 							<SharedElement id={`item.${item.id}.price`}>
-								<Text h3 style={styles.cardTitle}>
-									${item.price}
+								<Text h5 style={styles.cardTitle}>
+									£{item.price}
 								</Text>
 							</SharedElement>
 						</Block>
 						<SharedElement id={`item.${item.id}.description`}>
-							<Text size={12} muted={!ctaColor} color={ctaColor} bold>
-								{item.description}
-							</Text>
+							<Block>
+								<Text size={12} muted={!ctaColor} color={ctaColor} bold>
+									{item.description}
+								</Text>
+							</Block>
 						</SharedElement>
 					</Block>
 				</TouchableWithoutFeedback>

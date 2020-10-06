@@ -63,7 +63,7 @@ export default function Homescreen({ navigation }) {
 						renderItem={({ item, index }) => (
 							<Card
 								full
-								key={index}
+								key={item.id}
 								item={item}
 								onPress={() => {
 									navigation.push("Hamper", { item });

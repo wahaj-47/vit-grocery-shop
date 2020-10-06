@@ -1,5 +1,11 @@
-import React from "react";
-import { View, StyleSheet, SafeAreaView, Image } from "react-native";
+import React, { useState } from "react";
+import {
+	View,
+	StyleSheet,
+	SafeAreaView,
+	Image,
+	ActivityIndicator,
+} from "react-native";
 import { Icon } from "../components";
 import { Text } from "galio-framework";
 import argonTheme from "../constants/Theme";
@@ -9,8 +15,11 @@ import { Block } from "galio-framework";
 import { widthPercentageToDP as wp } from "react-native-responsive-screen";
 import ArButton from "../components/Button";
 import { showMessage } from "react-native-flash-message";
+import FastImage from "react-native-fast-image";
 
 export default function Cart({ navigation }) {
+	const [processing, setProcessing] = useState(false);
+
 	function ListHeaderComponent() {
 		return (
 			<View style={styles.header}>
@@ -41,18 +50,31 @@ export default function Cart({ navigation }) {
 							Total
 						</Text>
 					</View>
-					<Text h5>${total}</Text>
+					<Text h5>£{total}</Text>
 				</View>
 				<ArButton
+					color="button_color"
 					onPress={() => {
 						if (cart.length < 1) {
 							showMessage({ message: "Cart is empty", type: "info" });
+						} else {
+							// setProcessing(true);
+							navigation.navigate("Shipping", { total });
+							// functions()
+							// 	.httpsCallable("createClientToken")()
+							// 	.then((response) => {
+							// 		makePayment(response.data.clientToken, total);
+							// 	});
 						}
 					}}
 				>
-					<Text h5 color={argonTheme.COLORS.SECONDARY} bold>
-						Check Out
-					</Text>
+					{!processing ? (
+						<Text h5 color={argonTheme.COLORS.SECONDARY} bold>
+							Check Out
+						</Text>
+					) : (
+						<ActivityIndicator color="white"></ActivityIndicator>
+					)}
 				</ArButton>
 			</>
 		);
@@ -79,15 +101,15 @@ export default function Cart({ navigation }) {
 			>
 				<Block
 					row
-					width={wp("25%")}
+					width={wp("30%")}
 					space="between"
 					style={{ alignItems: "center" }}
 				>
-					<Image
-						source={{ uri: item.products[0].image }}
+					<FastImage
+						source={{ uri: item?.image }}
 						style={styles.image}
-					></Image>
-					<Text h5 bold>
+					></FastImage>
+					<Text h6 bold style={{ marginLeft: 10 }}>
 						{item.title}
 					</Text>
 				</Block>
@@ -97,7 +119,7 @@ export default function Cart({ navigation }) {
 					space="between"
 					style={{ alignItems: "center" }}
 				>
-					<Text h5>${item.price}</Text>
+					<Text h5>£{item.price}</Text>
 					<Icon
 						onPress={() => {
 							removeFromCart(item);

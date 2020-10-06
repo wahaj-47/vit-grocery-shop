@@ -12,7 +12,7 @@ export function CartProvider(props) {
 	function addToCart(hamper) {
 		setCart(() => {
 			showMessage({ message: "Added to cart", type: "success" });
-			setTotal(total + hamper.price);
+			setTotal(total + Number(hamper.price));
 			return [...cart, hamper];
 		});
 	}
@@ -24,8 +24,14 @@ export function CartProvider(props) {
 		});
 	}
 
+	function clearCart() {
+		setCart([]);
+	}
+
 	return (
-		<CartContext.Provider value={{ cart, addToCart, total, removeFromCart }}>
+		<CartContext.Provider
+			value={{ cart, addToCart, total, removeFromCart, clearCart }}
+		>
 			{props.children}
 		</CartContext.Provider>
 	);

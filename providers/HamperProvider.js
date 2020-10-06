@@ -8,7 +8,10 @@ export function HamperProvider(props) {
 	const [hampers, setHampers] = useState([]);
 
 	async function getHampers() {
-		const documentSnapshot = await firestore().collection("hampers").get();
+		const documentSnapshot = await firestore()
+			.collection("hampers")
+			.orderBy("price")
+			.get();
 		const arr = [];
 		documentSnapshot.forEach((doc) => {
 			arr.push({ id: doc.id, ...doc.data() });

@@ -1,5 +1,6 @@
 #import "AppDelegate.h"
 
+#import <React/RCTLinkingManager.h>
 #import <React/RCTBridge.h>
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTRootView.h>
@@ -10,6 +11,9 @@
 #import <EXSplashScreen/EXSplashScreenService.h>
 #import <UMCore/UMModuleRegistryProvider.h>
 
+#import <Firebase.h>
+#import "RNPaypal.h"
+
 #if DEBUG
 #import <FlipperKit/FlipperClient.h>
 #import <FlipperKitLayoutPlugin/FlipperKitLayoutPlugin.h>
@@ -18,7 +22,7 @@
 #import <SKIOSNetworkPlugin/SKIOSNetworkAdapter.h>
 #import <FlipperKitReactPlugin/FlipperKitReactPlugin.h>
 
-#import <Firebase.h>
+
 
 static void InitializeFlipper(UIApplication *application) {
   FlipperClient *client = [FlipperClient sharedClient];
@@ -45,6 +49,8 @@ static void InitializeFlipper(UIApplication *application) {
   if ([FIRApp defaultApp] == nil) {
     [FIRApp configure];
   }
+
+  [[RNPaypal sharedInstance] configure];
   
 #if DEBUG
   InitializeFlipper(application);
@@ -65,6 +71,13 @@ static void InitializeFlipper(UIApplication *application) {
 
   return YES;
 }
+
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url
+  options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options
+{
+  return [[RNPaypal sharedInstance] application:application openURL:url options:options];
+}
+
 
 - (RCTBridge *)initializeReactNativeApp
 {
