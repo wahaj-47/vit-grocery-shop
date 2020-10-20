@@ -5,6 +5,7 @@ import SignUp from "./SignUp";
 import Cart from "./Cart";
 import ForgotPassword from "./ForgotPassword";
 import ShippingDetails from "./ShippingDetails";
+import Contact from "./Contact";
 
 export {
 	Homescreen,
@@ -14,4 +15,5 @@ export {
 	Cart,
 	ForgotPassword,
 	ShippingDetails,
+	Contact,
 };

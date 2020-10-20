@@ -23,7 +23,7 @@ import { heightPercentageToDP } from "react-native-responsive-screen";
 export default function ShippingDetails({ navigation, route }) {
 	const { total } = route.params;
 	const [shippingAddress, setShippingAddress] = useState({
-		country: "Zimbawe",
+		country: "Zimbabwe",
 	});
 	const [processing, setProcessing] = useState(false);
 	const authContext = useContext(AuthContext);
@@ -173,21 +173,24 @@ export default function ShippingDetails({ navigation, route }) {
 						color={argonTheme.COLORS.MUTED}
 					></Icon>
 					<Text h3 bold style={{ marginBottom: 10 }}>
-						Shipping Address
+						Delivery Address
 					</Text>
 					<Input
+						placeholderTextColor="grey"
 						placeholder="Address"
 						onChangeText={(value) => {
 							handleTextChange(value, "address");
 						}}
 					></Input>
 					<Input
+						placeholderTextColor="grey"
 						placeholder="Apt, suite, etc (optional)"
 						onChangeText={(value) => {
 							handleTextChange(value, "apt");
 						}}
 					></Input>
 					<Input
+						placeholderTextColor="grey"
 						placeholder="City"
 						onChangeText={(value) => {
 							handleTextChange(value, "city");
@@ -210,11 +213,12 @@ export default function ShippingDetails({ navigation, route }) {
 								flex: 1,
 								marginLeft: 20,
 								color: argonTheme.COLORS.PLACEHOLDER,
+								paddingVertical: 12,
 							}}
 						>
 							{shippingAddress.country ? shippingAddress.country : "Country"}
 						</Text>
-						<CountryPicker
+						{/* <CountryPicker
 							withCountryNameButton
 							withFlag={false}
 							visible={false}
@@ -225,15 +229,17 @@ export default function ShippingDetails({ navigation, route }) {
 							// onSelect={(country) => {
 							// 	handleTextChange(country.name, "country");
 							// }}
-						/>
+						/> */}
 					</View>
 					<Input
+						placeholderTextColor="grey"
 						placeholder="Zip Code"
 						onChangeText={(value) => {
 							handleTextChange(value, "zipcode");
 						}}
 					></Input>
 					<Input
+						placeholderTextColor="grey"
 						placeholder="Phone"
 						onChangeText={(value) => {
 							handleTextChange(value, "phone");

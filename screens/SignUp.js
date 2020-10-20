@@ -4,12 +4,15 @@ import {
 	SafeAreaView,
 	View,
 	ActivityIndicator,
+	Image,
 } from "react-native";
 import { Card, Icon, Input, Button } from "../components";
 import { FlatList } from "react-native-gesture-handler";
 import { Text } from "galio-framework";
 import { argonTheme } from "../constants";
 import { AuthContext } from "../providers/AuthProvider";
+import logo from "../assets/imgs/logo-2.png";
+import { widthPercentageToDP } from "react-native-responsive-screen";
 
 export default function SignUp({ navigation }) {
 	const [name, setName] = useState("");
@@ -20,7 +23,16 @@ export default function SignUp({ navigation }) {
 		<AuthContext.Consumer>
 			{({ signUp, isLoading }) => (
 				<View style={styles.container}>
-					<Text h1 bold style={styles.heading}>
+					<Image
+						source={logo}
+						style={{
+							width: widthPercentageToDP("90"),
+							height: widthPercentageToDP("30%"),
+							marginBottom: 10,
+						}}
+						resizeMode="contain"
+					/>
+					<Text h3 bold style={styles.heading}>
 						Sign Up
 					</Text>
 					<Input
@@ -94,5 +106,6 @@ const styles = StyleSheet.create({
 	heading: {
 		alignSelf: "flex-start",
 		marginBottom: 20,
+		color: "#142F6B",
 	},
 });

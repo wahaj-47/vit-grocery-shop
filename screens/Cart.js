@@ -20,23 +20,32 @@ import FastImage from "react-native-fast-image";
 export default function Cart({ navigation }) {
 	const [processing, setProcessing] = useState(false);
 
-	function ListHeaderComponent() {
+	function ListHeaderComponent({ cart }) {
 		return (
 			<View style={styles.header}>
-				<View style={styles.headerLeft}>
-					<Icon
-						onPress={() => {
-							navigation.openDrawer();
-						}}
-						name="menu"
-						family="Ionicons"
-						size={25}
-						style={{ marginRight: 10 }}
-					></Icon>
-					<Text h1 bold>
-						Cart
-					</Text>
+				<View>
+					<View style={styles.headerLeft}>
+						<Icon
+							onPress={() => {
+								navigation.openDrawer();
+							}}
+							name="menu"
+							family="Ionicons"
+							size={25}
+							style={{ marginRight: 10 }}
+						></Icon>
+						<Text h1 bold>
+							Cart
+						</Text>
+					</View>
 				</View>
+				{cart.length > 0 && (
+					<View>
+						<Text style={styles.numItems}>
+							Number of items in cart: {cart.length}
+						</Text>
+					</View>
+				)}
 			</View>
 		);
 	}
@@ -50,7 +59,7 @@ export default function Cart({ navigation }) {
 							Total
 						</Text>
 					</View>
-					<Text h5>£{total}</Text>
+					<Text h5>£{total.toFixed(2)}</Text>
 				</View>
 				<ArButton
 					color="button_color"
@@ -139,7 +148,9 @@ export default function Cart({ navigation }) {
 			{({ cart, total, removeFromCart }) => (
 				<SafeAreaView style={{ flex: 1 }}>
 					<FlatList
-						ListHeaderComponent={ListHeaderComponent}
+						ListHeaderComponent={
+							<ListHeaderComponent cart={cart}></ListHeaderComponent>
+						}
 						ListEmptyComponent={ListEmptyComponent}
 						ListFooterComponent={
 							<ListFooterComponent
@@ -178,5 +189,8 @@ const styles = StyleSheet.create({
 		paddingHorizontal: 20,
 		paddingVertical: 10,
 		alignItems: "center",
+	},
+	numItems: {
+		fontSize: 16,
 	},
 });

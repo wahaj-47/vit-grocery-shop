@@ -1,11 +1,13 @@
 import React, { useContext, useEffect } from "react";
-import { StyleSheet, SafeAreaView, View } from "react-native";
+import { StyleSheet, SafeAreaView, View, Image } from "react-native";
 import { Card, Icon } from "../components";
 import { FlatList, TouchableOpacity } from "react-native-gesture-handler";
 import { Text } from "galio-framework";
 import { argonTheme } from "../constants";
 import { HamperContext } from "../providers/HamperProvider";
 import { CartContext } from "../providers/CartProvider";
+import logo from "../assets/imgs/logo-2.png";
+import { widthPercentageToDP } from "react-native-responsive-screen";
 
 export default function Homescreen({ navigation }) {
 	const { getHampers } = useContext(HamperContext);
@@ -18,35 +20,50 @@ export default function Homescreen({ navigation }) {
 		return (
 			<CartContext.Consumer>
 				{({ cart }) => (
-					<View style={styles.header}>
-						<View style={styles.headerLeft}>
-							<Icon
-								onPress={() => {
-									navigation.openDrawer();
-								}}
-								name="menu"
-								family="Ionicons"
-								size={25}
-								style={{ marginRight: 10 }}
-							></Icon>
-							<Text h1 bold>
-								Shop
-							</Text>
-						</View>
-						<TouchableOpacity
-							onPress={() => {
-								navigation.jumpTo("Cart");
+					<>
+						{/* <Image
+							source={logo}
+							style={{
+								width: widthPercentageToDP("90"),
+								height: widthPercentageToDP("30%"),
+								marginBottom: 10,
 							}}
-						>
-							<Icon
-								name="shopping-cart"
-								family="FontAwesome5"
-								size={25}
-								style={{ marginRight: 10 }}
-							></Icon>
-							{cart.length > 0 && <View style={styles.badge}></View>}
-						</TouchableOpacity>
-					</View>
+							resizeMode="contain"
+						/> */}
+						<View style={styles.header}>
+							<View style={styles.headerLeft}>
+								<Icon
+									onPress={() => {
+										navigation.openDrawer();
+									}}
+									name="menu"
+									family="Ionicons"
+									size={25}
+									style={{ marginRight: 10 }}
+								></Icon>
+								<Text h1 bold>
+									Shop
+								</Text>
+							</View>
+							<TouchableOpacity
+								onPress={() => {
+									navigation.jumpTo("Cart");
+								}}
+							>
+								<Icon
+									name="shopping-cart"
+									family="FontAwesome5"
+									size={36}
+									style={{ marginRight: 10 }}
+								></Icon>
+								{cart.length > 0 && (
+									<View style={styles.badge}>
+										<Text style={styles.badgeNumber}>{cart.length}</Text>
+									</View>
+								)}
+							</TouchableOpacity>
+						</View>
+					</>
 				)}
 			</CartContext.Consumer>
 		);
@@ -89,14 +106,18 @@ const styles = StyleSheet.create({
 	},
 	headerLeft: { flexDirection: "row", alignItems: "center" },
 	badge: {
-		backgroundColor: argonTheme.COLORS.SUCCESS,
+		backgroundColor: argonTheme.COLORS.BUTTON_COLOR,
 		alignItems: "center",
 		justifyContent: "center",
 		borderRadius: 50,
 		position: "absolute",
 		bottom: 0,
 		right: 5,
-		width: 15,
-		height: 15,
+		width: 20,
+		height: 20,
+	},
+	badgeNumber: {
+		color: "white",
+		fontSize: 10,
 	},
 });

@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>214684524092-00lnsganfs5tj3cv0h2rn7b4sn75erlt.apps.googleusercontent.com</string>
+	<string>214684524092-0d0hvr7u86s5kbe5um1p0vb0nd4fsq4s.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.214684524092-00lnsganfs5tj3cv0h2rn7b4sn75erlt</string>
+	<string>com.googleusercontent.apps.214684524092-0d0hvr7u86s5kbe5um1p0vb0nd4fsq4s</string>
 	<key>API_KEY</key>
 	<string>AIzaSyCHzVIY2hziLg72zN8hGKQ9rhrQKewnzAk</string>
 	<key>GCM_SENDER_ID</key>
@@ -13,7 +13,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.vitgroceryshop</string>
+	<string>com.vitgrocery.vitgroceryshop</string>
 	<key>PROJECT_ID</key>
 	<string>vitgroceryshop-9f28a</string>
 	<key>STORAGE_BUCKET</key>
@@ -29,7 +29,7 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:214684524092:ios:26689aa55bdb96a96eed39</string>
+	<string>1:214684524092:ios:6fc3b418c7fd63966eed39</string>
 	<key>DATABASE_URL</key>
 	<string>https://vitgroceryshop-9f28a.firebaseio.com</string>
 </dict>

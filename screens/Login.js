@@ -4,12 +4,15 @@ import {
 	SafeAreaView,
 	View,
 	ActivityIndicator,
+	Image,
 } from "react-native";
 import { Card, Icon, Input, Button } from "../components";
 import { FlatList } from "react-native-gesture-handler";
 import { Text } from "galio-framework";
 import { argonTheme } from "../constants";
 import { AuthContext } from "../providers/AuthProvider";
+import logo from "../assets/imgs/logo-2.png";
+import { widthPercentageToDP } from "react-native-responsive-screen";
 
 export default function Login({ navigation }) {
 	const [email, setEmail] = useState("");
@@ -19,9 +22,18 @@ export default function Login({ navigation }) {
 		<AuthContext.Consumer>
 			{({ signIn, isLoading }) => (
 				<View style={styles.container}>
-					<Text h1 bold style={styles.heading}>
+					<Image
+						source={logo}
+						style={{
+							width: widthPercentageToDP("90"),
+							height: widthPercentageToDP("30%"),
+							marginBottom: 10,
+						}}
+						resizeMode="contain"
+					/>
+					{/* <Text h1 bold style={styles.heading}>
 						Vit Grocery Shop
-					</Text>
+					</Text> */}
 					<Input
 						autoCompleteType="email"
 						placeholder="Email"
@@ -86,6 +98,7 @@ const styles = StyleSheet.create({
 		alignItems: "center",
 		justifyContent: "center",
 		paddingHorizontal: 20,
+		backgroundColor: "white",
 	},
 	btn: {
 		marginTop: 25,

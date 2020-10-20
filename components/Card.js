@@ -44,6 +44,7 @@ class Card extends React.Component {
 					<Block flex style={imgContainer}>
 						<SharedElement id={`item.${item.id}.image`}>
 							<FastImage
+								resizeMode="contain"
 								source={{
 									uri: item.image,
 								}}
@@ -66,13 +67,13 @@ class Card extends React.Component {
 								</Text>
 							</SharedElement>
 						</Block>
-						<SharedElement id={`item.${item.id}.description`}>
+						{/* <SharedElement id={`item.${item.id}.description`}>
 							<Block>
 								<Text size={12} muted={!ctaColor} color={ctaColor} bold>
 									{item.description}
 								</Text>
 							</Block>
-						</SharedElement>
+						</SharedElement> */}
 					</Block>
 				</TouchableWithoutFeedback>
 			</Block>

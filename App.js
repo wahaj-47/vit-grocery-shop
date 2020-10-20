@@ -13,24 +13,27 @@ import { CartProvider } from "./providers/CartProvider";
 
 export default function App() {
 	return (
-		<AuthProvider>
-			<HamperProvider>
-				<CartProvider>
-					<NavigationContainer>
-						<AuthContext.Consumer>
-							{({ initializing, user }) =>
-								!initializing && user && user?.emailVerified ? (
-									<RootDrawer></RootDrawer>
-								) : (
-									<AuthStack></AuthStack>
-								)
-							}
-						</AuthContext.Consumer>
-					</NavigationContainer>
-					<FlashMessage></FlashMessage>
-				</CartProvider>
-			</HamperProvider>
-		</AuthProvider>
+		<>
+			<StatusBar style="dark"></StatusBar>
+			<AuthProvider>
+				<HamperProvider>
+					<CartProvider>
+						<NavigationContainer>
+							<AuthContext.Consumer>
+								{({ initializing, user }) =>
+									!initializing && user && user?.emailVerified ? (
+										<RootDrawer></RootDrawer>
+									) : (
+										<AuthStack></AuthStack>
+									)
+								}
+							</AuthContext.Consumer>
+						</NavigationContainer>
+						<FlashMessage></FlashMessage>
+					</CartProvider>
+				</HamperProvider>
+			</AuthProvider>
+		</>
 	);
 }
 

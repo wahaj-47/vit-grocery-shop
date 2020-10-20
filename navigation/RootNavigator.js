@@ -1,5 +1,5 @@
 import React from "react";
-import { Cart } from "../screens";
+import { Cart, Contact } from "../screens";
 import {
 	createDrawerNavigator,
 	DrawerContentScrollView,
@@ -58,6 +58,7 @@ export default function RootDrawer() {
 				>
 					<Drawer.Screen name="Home" component={HomeStack} />
 					<Drawer.Screen name="Cart" component={CartStack} />
+					<Drawer.Screen name="Contact" component={Contact} />
 				</Drawer.Navigator>
 			)}
 		</AuthContext.Consumer>

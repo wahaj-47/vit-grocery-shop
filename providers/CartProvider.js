@@ -12,14 +12,14 @@ export function CartProvider(props) {
 	function addToCart(hamper) {
 		setCart(() => {
 			showMessage({ message: "Added to cart", type: "success" });
-			setTotal(total + Number(hamper.price));
+			setTotal(parseFloat((total + Number(hamper.price)).toFixed(2)));
 			return [...cart, hamper];
 		});
 	}
 
 	function removeFromCart(hamper) {
 		setCart(() => {
-			setTotal(total - hamper.price);
+			setTotal(parseFloat((total - Number(hamper.price)).toFixed(2)));
 			return cart.filter((item) => item !== hamper);
 		});
 	}
