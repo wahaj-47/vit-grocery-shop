@@ -177,6 +177,13 @@ export default function ShippingDetails({ navigation, route }) {
 					</Text>
 					<Input
 						placeholderTextColor="grey"
+						placeholder="Name"
+						onChangeText={(value) => {
+							handleTextChange(value, "name");
+						}}
+					></Input>
+					<Input
+						placeholderTextColor="grey"
 						placeholder="Address"
 						onChangeText={(value) => {
 							handleTextChange(value, "address");

@@ -40,7 +40,7 @@ export default function Contact({ navigation }) {
 					</Text>
 					<Text
 						onPress={() => {
-							Linking.openURL("vitgroceryshop.online");
+							Linking.openURL("https://www.vitgroceryshop.online/");
 						}}
 						h5
 						style={styles.info}
@@ -90,5 +90,6 @@ const styles = StyleSheet.create({
 	},
 	info: {
 		marginVertical: 5,
+		color: "steelblue",
 	},
 });
