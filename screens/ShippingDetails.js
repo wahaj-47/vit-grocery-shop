@@ -1,6 +1,11 @@
 import React, { useContext, useState } from "react";
 import { Block, Input, Text } from "galio-framework";
-import { ActivityIndicator, Linking, View } from "react-native";
+import {
+	ActivityIndicator,
+	KeyboardAvoidingView,
+	Linking,
+	View,
+} from "react-native";
 import CountryPicker from "react-native-country-picker-modal";
 import { ScrollView } from "react-native-gesture-handler";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -9,16 +14,17 @@ import { argonTheme } from "../constants";
 import ArButton from "../components/Button";
 import functions from "@react-native-firebase/functions";
 import firestore from "@react-native-firebase/firestore";
-import {
-	requestOneTimePayment,
-	requestBillingAgreement,
-} from "react-native-paypal";
+// import {
+// 	requestOneTimePayment,
+// 	requestBillingAgreement,
+// } from "react-native-paypal";
 import { AuthContext } from "../providers/AuthProvider";
 import { showMessage } from "react-native-flash-message";
 import { CartContext } from "../providers/CartProvider";
 import Modal from "react-native-modal";
 import WebView from "react-native-webview";
 import { heightPercentageToDP } from "react-native-responsive-screen";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 export default function ShippingDetails({ navigation, route }) {
 	const { total } = route.params;
@@ -37,58 +43,58 @@ export default function ShippingDetails({ navigation, route }) {
 		setShippingAddress({ ...shippingAddress, [name]: value });
 	};
 
-	const makePayment = async (token, total) => {
-		try {
-			const {
-				nonce,
-				payerId,
-				email,
-				firstName,
-				lastName,
-				phone,
-			} = await requestOneTimePayment(token, {
-				amount: String(total), // required
-				// any PayPal supported currency (see here: https://developer.paypal.com/docs/integration/direct/rest/currency-codes/#paypal-account-payments)
-				currency: "GBP",
-				// any PayPal supported locale (see here: https://braintree.github.io/braintree_ios/Classes/BTPayPalRequest.html#/c:objc(cs)BTPayPalRequest(py)localeCode)
-				localeCode: "en_GB",
-				shippingAddressRequired: false,
-				userAction: "commit", // display 'Pay Now' on the PayPal review page
-				// one of 'authorize', 'sale', 'order'. defaults to 'authorize'. see details here: https://developer.paypal.com/docs/api/payments/v1/#payment-create-request-body
-				intent: "sale",
-			});
-			functions()
-				.httpsCallable("makeTransaction")({
-					nonce,
-					amount: total,
-					name: user?.displayName,
-					shippingAddress,
-					email: user?.email,
-					items: cart,
-				})
-				.then((response) => {
-					const {
-						data: { success },
-					} = response;
-					if (success) {
-						setProcessing(false);
-						clearCart();
-						showMessage({
-							message: "Order placed successfully",
-							description:
-								"You'll receive further information about the progression of this order on your email.",
-							type: "info",
-						});
-						setTimeout(() => {
-							navigation.navigate("Home");
-						}, 2000);
-					}
-				});
-		} catch (error) {
-			setProcessing(false);
-			console.log("error" + JSON.stringify(error));
-		}
-	};
+	// const makePayment = async (token, total) => {
+	// 	try {
+	// 		const {
+	// 			nonce,
+	// 			payerId,
+	// 			email,
+	// 			firstName,
+	// 			lastName,
+	// 			phone,
+	// 		} = await requestOneTimePayment(token, {
+	// 			amount: String(total), // required
+	// 			// any PayPal supported currency (see here: https://developer.paypal.com/docs/integration/direct/rest/currency-codes/#paypal-account-payments)
+	// 			currency: "GBP",
+	// 			// any PayPal supported locale (see here: https://braintree.github.io/braintree_ios/Classes/BTPayPalRequest.html#/c:objc(cs)BTPayPalRequest(py)localeCode)
+	// 			localeCode: "en_GB",
+	// 			shippingAddressRequired: false,
+	// 			userAction: "commit", // display 'Pay Now' on the PayPal review page
+	// 			// one of 'authorize', 'sale', 'order'. defaults to 'authorize'. see details here: https://developer.paypal.com/docs/api/payments/v1/#payment-create-request-body
+	// 			intent: "sale",
+	// 		});
+	// 		functions()
+	// 			.httpsCallable("makeTransaction")({
+	// 				nonce,
+	// 				amount: total,
+	// 				name: user?.displayName,
+	// 				shippingAddress,
+	// 				email: user?.email,
+	// 				items: cart,
+	// 			})
+	// 			.then((response) => {
+	// 				const {
+	// 					data: { success },
+	// 				} = response;
+	// 				if (success) {
+	// 					setProcessing(false);
+	// 					clearCart();
+	// 					showMessage({
+	// 						message: "Order placed successfully",
+	// 						description:
+	// 							"You'll receive further information about the progression of this order on your email.",
+	// 						type: "info",
+	// 					});
+	// 					setTimeout(() => {
+	// 						navigation.navigate("Home");
+	// 					}, 2000);
+	// 				}
+	// 			});
+	// 	} catch (error) {
+	// 		setProcessing(false);
+	// 		console.log("error" + JSON.stringify(error));
+	// 	}
+	// };
 
 	const createOrder = async () => {
 		try {
@@ -160,7 +166,11 @@ export default function ShippingDetails({ navigation, route }) {
 
 	return (
 		<SafeAreaView>
-			<ScrollView style={{ paddingHorizontal: 20, paddingTop: 20 }}>
+			<KeyboardAwareScrollView
+				enableAutomaticScroll
+				enableOnAndroid
+				style={{ paddingHorizontal: 20 }}
+			>
 				<Block>
 					<Icon
 						onPress={() => {
@@ -284,7 +294,7 @@ export default function ShippingDetails({ navigation, route }) {
 						)}
 					</ArButton>
 				</Block>
-			</ScrollView>
+			</KeyboardAwareScrollView>
 			<Modal
 				isVisible={showApproveModal}
 				style={{ justifyContent: "flex-end", margin: 0 }}
