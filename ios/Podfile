@@ -89,8 +89,6 @@ target 'vitGroceryShop' do
 
   pod 'Braintree', '~> 4.35.0'
   
-  pod 'RNPaypal', :path => '../node_modules/react-native-paypal/ios'
-
   post_install do |installer|
     flipper_post_install(installer)
   end

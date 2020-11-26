@@ -12,7 +12,6 @@
 #import <UMCore/UMModuleRegistryProvider.h>
 
 #import <Firebase.h>
-#import "RNPaypal.h"
 
 #if DEBUG
 #import <FlipperKit/FlipperClient.h>
@@ -49,8 +48,6 @@ static void InitializeFlipper(UIApplication *application) {
   if ([FIRApp defaultApp] == nil) {
     [FIRApp configure];
   }
-
-  [[RNPaypal sharedInstance] configure];
   
 #if DEBUG
   InitializeFlipper(application);
@@ -70,12 +67,6 @@ static void InitializeFlipper(UIApplication *application) {
   [super application:application didFinishLaunchingWithOptions:launchOptions];
 
   return YES;
-}
-
-- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url
-  options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options
-{
-  return [[RNPaypal sharedInstance] application:application openURL:url options:options];
 }
 
 

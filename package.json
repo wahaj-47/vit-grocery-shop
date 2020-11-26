@@ -27,6 +27,7 @@
 		"react-dom": "~16.11.0",
 		"react-native": "~0.62.2",
 		"react-native-country-picker-modal": "^2.0.0",
+		"react-native-credit-card-input": "^0.4.1",
 		"react-native-fast-image": "^8.3.2",
 		"react-native-flash-message": "^0.1.16",
 		"react-native-gesture-handler": "^1.7.0",
@@ -41,7 +42,8 @@
 		"react-native-unimodules": "~0.10.1",
 		"react-native-web": "~0.11.7",
 		"react-native-webview": "^10.9.1",
-		"react-navigation-shared-element": "^5.0.0-alpha1"
+		"react-navigation-shared-element": "^5.0.0-alpha1",
+		"tipsi-stripe": "^7.5.3"
 	},
 	"devDependencies": {
 		"@babel/core": "~7.9.0",

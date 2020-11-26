@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { Block, Input, Text } from "galio-framework";
+import { Block, Button, Input, Text } from "galio-framework";
 import {
 	ActivityIndicator,
 	KeyboardAvoidingView,
@@ -25,12 +25,23 @@ import Modal from "react-native-modal";
 import WebView from "react-native-webview";
 import { heightPercentageToDP } from "react-native-responsive-screen";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import {
+	CreditCardInput,
+	LiteCreditCardInput,
+} from "react-native-credit-card-input";
+import stripe from "tipsi-stripe";
+
+stripe.setOptions({
+	publishableKey:
+		"pk_live_51HYwOeECZhHspUzfV9fCh678vZ3TYc0sq5DJVV7c1pQjPE18ouaMAazbOBEkLtnLZ0E4pCLm2lJWqSkgjC1utIow003FdXg8eG",
+});
 
 export default function ShippingDetails({ navigation, route }) {
 	const { total } = route.params;
 	const [shippingAddress, setShippingAddress] = useState({
 		country: "Zimbabwe",
 	});
+	const [card, setCard] = useState({});
 	const [processing, setProcessing] = useState(false);
 	const authContext = useContext(AuthContext);
 	const { user } = authContext;
@@ -38,6 +49,8 @@ export default function ShippingDetails({ navigation, route }) {
 	const { cart, clearCart } = cartContext;
 	const [order, setOrder] = useState({});
 	const [showApproveModal, setShowApproveModal] = useState(false);
+	const [showPaymentMethodModal, setShowPaymentMethodModal] = useState(false);
+	const [isFormValid, setIsFormValid] = useState(false);
 
 	const handleTextChange = (value, name) => {
 		setShippingAddress({ ...shippingAddress, [name]: value });
@@ -135,33 +148,68 @@ export default function ShippingDetails({ navigation, route }) {
 			});
 			console.log(response.data.result);
 			if (response.data.result.status === "COMPLETED") {
-				firestore()
-					.collection("orders")
-					.add({
-						name: user?.displayName,
-						shippingAddress,
-						amount: total,
-						email: user?.email,
-						items: cart,
-					})
-					.then(() => {
-						setProcessing(false);
-
-						clearCart();
-						showMessage({
-							message: "Order placed successfully",
-							description:
-								"You'll receive further information about the progression of this order on your email.",
-							type: "info",
-						});
-						setTimeout(() => {
-							navigation.navigate("Home");
-						}, 2000);
-					});
+				addOrderToFirestore("paypal");
 			}
 		} catch (error) {
 			console.log(error);
 		}
+	};
+
+	const addOrderToFirestore = (type) => {
+		firestore()
+			.collection("orders")
+			.add({
+				name: user?.displayName,
+				shippingAddress,
+				amount: total,
+				email: user?.email,
+				items: cart,
+				paymentMethod: type,
+			})
+			.then(() => {
+				setProcessing(false);
+
+				clearCart();
+				showMessage({
+					message: "Order placed successfully",
+					description:
+						"You'll receive further information about the progression of this order on your email.",
+					type: "info",
+				});
+				setTimeout(() => {
+					navigation.navigate("Home");
+				}, 2000);
+			});
+	};
+
+	const handleCreditCardInput = (form) => {
+		if (form.valid) {
+			setIsFormValid(true);
+		} else {
+			setIsFormValid(false);
+		}
+		setCard({ ...form });
+		console.log(form);
+	};
+
+	const makePaymentByCard = async () => {
+		const token = await stripe.createTokenWithCard({
+			...card.values,
+			number: card.values.number,
+			expMonth: Number(card.values.expiry.split("/")[0]),
+			expYear: Number(card.values.expiry.split("/")[1]),
+		});
+		console.log(token);
+		functions()
+			.httpsCallable("makeCardPayment")({
+				amount: total,
+				token: token.tokenId,
+			})
+			.then((res) => {
+				setShowPaymentMethodModal(false);
+				addOrderToFirestore("card");
+			})
+			.catch((err) => console.log(err));
 	};
 
 	return (
@@ -275,7 +323,8 @@ export default function ShippingDetails({ navigation, route }) {
 							// 	.catch((error) => {
 							// 		console.log(JSON.stringify(error));
 							// 	});
-							createOrder();
+							setShowPaymentMethodModal(true);
+							// createOrder();
 						}}
 						// disabled={
 						// 	!shippingAddress.address &&
@@ -296,10 +345,82 @@ export default function ShippingDetails({ navigation, route }) {
 				</Block>
 			</KeyboardAwareScrollView>
 			<Modal
+				animationIn="bounceInDown"
+				animationOut="bounceOutUp"
+				isVisible={showPaymentMethodModal}
+				style={{ justifyContent: "flex-start", margin: 0 }}
+				onBackdropPress={() => {
+					setShowPaymentMethodModal(false);
+					setProcessing(false);
+				}}
+			>
+				<View
+					style={{
+						// height: heightPercentageToDP("45%"),
+						paddingTop: 50,
+						backgroundColor: "white",
+						borderBottomEndRadius: 25,
+						borderBottomStartRadius: 25,
+						alignItems: "center",
+						paddingBottom: 40,
+						paddingHorizontal: 20,
+					}}
+				>
+					<Text h5 style={{ paddingVertical: 20 }}>
+						Pay by card
+					</Text>
+					{/* <Input
+						placeholderTextColor="grey"
+						placeholder="Card holder name"
+						onChangeText={(value) => {
+							handleTextChange(value, "cardName");
+						}}
+					></Input> */}
+					<View style={{ height: heightPercentageToDP("32%") }}>
+						<CreditCardInput
+							requiresName
+							allowScroll
+							onChange={handleCreditCardInput}
+						/>
+					</View>
+					<Text h6 style={{ paddingVertical: 10 }}>
+						Powered by stripe
+					</Text>
+					<ArButton
+						color="button_color"
+						enabled={isFormValid}
+						onPress={() => {
+							makePaymentByCard();
+						}}
+					>
+						<Text h5 color={argonTheme.COLORS.SECONDARY} bold>
+							Submit
+						</Text>
+					</ArButton>
+					<Text h5 style={{ paddingVertical: 20 }}>
+						Or
+					</Text>
+					<ArButton
+						onPress={() => {
+							setShowPaymentMethodModal(false);
+							createOrder();
+						}}
+						color="button_color"
+					>
+						<Text h5 color={argonTheme.COLORS.SECONDARY} bold>
+							Use Paypal
+						</Text>
+					</ArButton>
+				</View>
+			</Modal>
+			<Modal
+				animationIn="bounceInUp"
+				animationOut="bounceOutDown"
 				isVisible={showApproveModal}
 				style={{ justifyContent: "flex-end", margin: 0 }}
 				onBackdropPress={() => {
 					setShowApproveModal(false);
+					setProcessing(false);
 				}}
 			>
 				<View
