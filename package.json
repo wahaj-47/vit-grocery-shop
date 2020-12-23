@@ -17,6 +17,7 @@
 		"@react-navigation/drawer": "^5.9.0",
 		"@react-navigation/native": "^5.0.9",
 		"@react-navigation/stack": "^5.1.1",
+		"card-validator": "^8.1.0",
 		"expo": "~38.0.9",
 		"expo-splash-screen": "^0.5.0",
 		"expo-status-bar": "^1.0.0",

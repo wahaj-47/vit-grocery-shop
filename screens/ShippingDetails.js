@@ -30,6 +30,7 @@ import {
 	LiteCreditCardInput,
 } from "react-native-credit-card-input";
 import stripe from "tipsi-stripe";
+import valid from "card-validator";
 
 stripe.setOptions({
 	publishableKey:
@@ -183,33 +184,39 @@ export default function ShippingDetails({ navigation, route }) {
 	};
 
 	const handleCreditCardInput = (form) => {
-		if (form.valid) {
-			setIsFormValid(true);
-		} else {
-			setIsFormValid(false);
-		}
-		setCard({ ...form });
-		console.log(form);
+		// if (form.valid) {
+		// 	setIsFormValid(true);
+		// } else {
+		// 	setIsFormValid(false);
+		// }
+
+		setCard({ ...card, ...form });
+		// console.log(form);
 	};
 
 	const makePaymentByCard = async () => {
-		const token = await stripe.createTokenWithCard({
-			...card.values,
-			number: card.values.number,
-			expMonth: Number(card.values.expiry.split("/")[0]),
-			expYear: Number(card.values.expiry.split("/")[1]),
-		});
-		console.log(token);
-		functions()
-			.httpsCallable("makeCardPayment")({
-				amount: total,
-				token: token.tokenId,
-			})
-			.then((res) => {
-				setShowPaymentMethodModal(false);
-				addOrderToFirestore("card");
-			})
-			.catch((err) => console.log(err));
+		let token;
+		try {
+			const token = await stripe.createTokenWithCard({
+				...card,
+				number: card.number,
+				expMonth: Number(card.expiry.split("/")[0]),
+				expYear: Number(card.expiry.split("/")[1]),
+			});
+			console.log(token);
+			functions()
+				.httpsCallable("makeCardPayment")({
+					amount: total,
+					token: token.tokenId,
+				})
+				.then((res) => {
+					setShowPaymentMethodModal(false);
+					addOrderToFirestore("card");
+				})
+				.catch((err) => console.log(err));
+		} catch (error) {
+			alert(error.message);
+		}
 	};
 
 	return (
@@ -361,7 +368,6 @@ export default function ShippingDetails({ navigation, route }) {
 						backgroundColor: "white",
 						borderBottomEndRadius: 25,
 						borderBottomStartRadius: 25,
-						alignItems: "center",
 						paddingBottom: 40,
 						paddingHorizontal: 20,
 					}}
@@ -376,28 +382,84 @@ export default function ShippingDetails({ navigation, route }) {
 							handleTextChange(value, "cardName");
 						}}
 					></Input> */}
-					<View style={{ height: heightPercentageToDP("32%") }}>
-						<CreditCardInput
+					<View style={{}}>
+						{/* <CreditCardInput
 							requiresName
 							allowScroll
 							onChange={handleCreditCardInput}
-						/>
+						/> */}
+
+						<Input
+							value={card.name}
+							placeholderTextColor="grey"
+							placeholder="Cardholder Name"
+							onChangeText={(value) => {
+								handleCreditCardInput({ name: value });
+							}}
+						></Input>
+						<Input
+							value={card.number}
+							placeholderTextColor="grey"
+							placeholder="Card number (no dashes or spaces)"
+							onChangeText={(value) => {
+								handleCreditCardInput({ number: value });
+							}}
+							keyboardType="number-pad"
+						></Input>
+						<Input
+							value={card.expiry}
+							placeholderTextColor="grey"
+							placeholder="Expiry Date (MM/YY)"
+							maxLength={5}
+							onChangeText={(value) => {
+								if (value.length === 3 && value[2] !== "/") {
+									let split = value.split("");
+									handleCreditCardInput({
+										expiry: [...split.slice(0, 2), "/", ...split.slice(2)].join(
+											""
+										),
+									});
+								} else {
+									handleCreditCardInput({ expiry: value });
+								}
+							}}
+							keyboardType="number-pad"
+						></Input>
+						<Input
+							value={card.cvv}
+							placeholderTextColor="grey"
+							placeholder="Security code (the last 3 digits on the back of your card)"
+							onChangeText={(value) => {
+								handleCreditCardInput({ cvv: value });
+							}}
+							maxLength={3}
+							keyboardType="number-pad"
+						></Input>
 					</View>
 					<Text h6 style={{ paddingVertical: 10 }}>
 						Powered by stripe
 					</Text>
 					<ArButton
 						color="button_color"
-						enabled={isFormValid}
 						onPress={() => {
-							makePaymentByCard();
+							console.log(valid.expirationDate(card.expiry));
+							if (
+								valid.number(card.number).isValid &&
+								valid.expirationDate(card.expiry).isValid &&
+								valid.cardholderName(card.name).isValid &&
+								valid.cvv(card.cvv).isValid
+							)
+								makePaymentByCard();
+							else {
+								alert("Error in form. Please recheck");
+							}
 						}}
 					>
 						<Text h5 color={argonTheme.COLORS.SECONDARY} bold>
 							Submit
 						</Text>
 					</ArButton>
-					<Text h5 style={{ paddingVertical: 20 }}>
+					<Text h5 style={{ paddingVertical: 20, alignSelf: "center" }}>
 						Or
 					</Text>
 					<ArButton
