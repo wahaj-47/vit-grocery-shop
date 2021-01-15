@@ -69,13 +69,13 @@ export default function HamperDetails({ navigation, route }) {
 							</SharedElement>
 							<View style={styles.hamperDescription}>
 								<Block
-									flex
+									// flex
 									row
 									space="between"
 									style={{ alignItems: "center" }}
 								>
 									<SharedElement id={`item.${item.id}.title`}>
-										<Text h4 bold>
+										<Text h5 bold style={{ width: "75%" }}>
 											{item.title}
 										</Text>
 									</SharedElement>

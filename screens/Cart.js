@@ -16,6 +16,7 @@ import { widthPercentageToDP as wp } from "react-native-responsive-screen";
 import ArButton from "../components/Button";
 import { showMessage } from "react-native-flash-message";
 import FastImage from "react-native-fast-image";
+import { DELIVERY_CHARGES, TAX } from "../constants";
 
 export default function Cart({ navigation }) {
 	const [processing, setProcessing] = useState(false);
@@ -55,11 +56,19 @@ export default function Cart({ navigation }) {
 			<>
 				<View style={styles.header}>
 					<View style={styles.headerLeft}>
+						<Text h6>Delivery Charges</Text>
+						<Text h6>VAT 20%</Text>
 						<Text h5 bold>
 							Total
 						</Text>
 					</View>
-					<Text h5>£{total.toFixed(2)}</Text>
+					<View style={styles.headerLeft}>
+						<Text h6>£{DELIVERY_CHARGES}</Text>
+						<Text h6>£{(total * TAX).toFixed(2)}</Text>
+						<Text h5>
+							£{(total + DELIVERY_CHARGES + total * TAX).toFixed(2)}
+						</Text>
+					</View>
 				</View>
 				<ArButton
 					color="button_color"
@@ -180,7 +189,7 @@ const styles = StyleSheet.create({
 		justifyContent: "space-between",
 		alignItems: "center",
 	},
-	headerLeft: { flexDirection: "row", alignItems: "center" },
+	headerLeft: { alignItems: "flex-start" },
 	image: {
 		width: 50,
 		height: 50,

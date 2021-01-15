@@ -57,7 +57,7 @@ class Card extends React.Component {
 					<Block flex space="between" style={styles.cardDescription}>
 						<Block flex row space="between">
 							<SharedElement id={`item.${item.id}.title`}>
-								<Text bold h4 style={styles.cardTitle}>
+								<Text bold h5 style={styles.cardTitle}>
 									{item.title}
 								</Text>
 							</SharedElement>
