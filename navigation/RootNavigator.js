@@ -9,7 +9,7 @@ import {
 import HomeStack from "./HomeStack";
 import CartStack from "./CartStack";
 import { AuthContext } from "../providers/AuthProvider";
-import { argonTheme } from "../constants";
+import argonTheme from "../constants/Theme";
 import { Image, View } from "react-native";
 import logo from "../assets/imgs/logo.png";
 import { Text } from "galio-framework";

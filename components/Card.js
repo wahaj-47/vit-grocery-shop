@@ -11,7 +11,7 @@ import { Block, Text, theme } from "galio-framework";
 import { SharedElement } from "react-navigation-shared-element";
 import _ from "lodash";
 
-import { argonTheme } from "../constants";
+import argonTheme from "../constants/Theme";
 import FastImage from "react-native-fast-image";
 
 class Card extends React.Component {

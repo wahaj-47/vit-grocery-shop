@@ -8,7 +8,7 @@ import {
 import { Card, Icon, Input, Button } from "../components";
 import { FlatList } from "react-native-gesture-handler";
 import { Text } from "galio-framework";
-import { argonTheme } from "../constants";
+import argonTheme from "../constants/Theme";
 import { AuthContext } from "../providers/AuthProvider";
 
 export default function SignUp({ navigation }) {

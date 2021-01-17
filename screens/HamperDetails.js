@@ -17,6 +17,7 @@ import {
 import { Icon } from "../components";
 import { CartContext } from "../providers/CartProvider";
 import FastImage from "react-native-fast-image";
+import { TAX } from "../constants";
 
 function Product({ item }) {
 	const { item: product } = item;
@@ -91,7 +92,7 @@ export default function HamperDetails({ navigation, route }) {
 							<ArButton
 								style={{ marginVertical: 30, alignSelf: "center" }}
 								onPress={() => {
-									addToCart(item);
+									addToCart({ ...item, tax: (item.price * TAX).toFixed(2) });
 								}}
 								color="button_color"
 							>

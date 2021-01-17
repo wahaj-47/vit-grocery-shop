@@ -3,7 +3,7 @@ import { StyleSheet, SafeAreaView, View, Image } from "react-native";
 import { Card, Icon } from "../components";
 import { FlatList, TouchableOpacity } from "react-native-gesture-handler";
 import { Text } from "galio-framework";
-import { argonTheme } from "../constants";
+import argonTheme from "../constants/Theme";
 import { HamperContext } from "../providers/HamperProvider";
 import { CartContext } from "../providers/CartProvider";
 import logo from "../assets/imgs/logo-2.png";

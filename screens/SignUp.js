@@ -9,7 +9,7 @@ import {
 import { Card, Icon, Input, Button } from "../components";
 import { FlatList } from "react-native-gesture-handler";
 import { Text } from "galio-framework";
-import { argonTheme } from "../constants";
+import argonTheme from "../constants/Theme";
 import { AuthContext } from "../providers/AuthProvider";
 import logo from "../assets/imgs/logo-2.png";
 import { widthPercentageToDP } from "react-native-responsive-screen";

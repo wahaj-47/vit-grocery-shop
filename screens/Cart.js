@@ -62,8 +62,8 @@ export default function Cart({ navigation }) {
 							Total
 						</Text>
 					</View>
-					<View style={styles.headerLeft}>
-						<Text h6>£{DELIVERY_CHARGES}</Text>
+					<View style={styles.headerRight}>
+						<Text h6>£{DELIVERY_CHARGES.toFixed(2)}</Text>
 						<Text h6>£{(total * TAX).toFixed(2)}</Text>
 						<Text h5>
 							£{(total + DELIVERY_CHARGES + total * TAX).toFixed(2)}
@@ -190,6 +190,7 @@ const styles = StyleSheet.create({
 		alignItems: "center",
 	},
 	headerLeft: { alignItems: "flex-start" },
+	headerRight: { alignItems: "flex-end" },
 	image: {
 		width: 50,
 		height: 50,

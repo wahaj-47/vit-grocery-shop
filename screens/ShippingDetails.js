@@ -113,8 +113,17 @@ export default function ShippingDetails({ navigation, route }) {
 
 	const createOrder = async () => {
 		try {
+			const amount = (total + DELIVERY_CHARGES + total * TAX).toFixed(2);
+			const tax = (total * TAX).toFixed(2);
+			console.log(amount);
+			cart.map((item) => {
+				console.log(item.tax);
+			});
 			const response = await functions().httpsCallable("createOrder")({
-				amount: Number(total),
+				total: total,
+				amount: Number(amount),
+				shipping: Number(DELIVERY_CHARGES),
+				tax: Number(tax),
 				items: cart,
 				email: user?.email,
 				name: user?.displayName,
@@ -167,6 +176,8 @@ export default function ShippingDetails({ navigation, route }) {
 				email: user?.email,
 				items: cart,
 				paymentMethod: type,
+				deliveryCharges: DELIVERY_CHARGES,
+				tax: total * TAX,
 			})
 			.then(() => {
 				setProcessing(false);
@@ -322,6 +333,21 @@ export default function ShippingDetails({ navigation, route }) {
 						color="button_color"
 						style={{ marginTop: 20 }}
 						onPress={() => {
+							const {
+								name,
+								address,
+								city,
+								country,
+								zipcode,
+								phone,
+							} = shippingAddress;
+							// if (
+							// 	name?.length > 0 &&
+							// 	address?.length > 0 &&
+							// 	city?.length > 0 &&
+							// 	zipcode?.length > 0 &&
+							// 	phone?.length > 0
+							// ) {
 							setProcessing(true);
 							// functions()
 							// 	.httpsCallable("createClientToken")()
@@ -332,6 +358,7 @@ export default function ShippingDetails({ navigation, route }) {
 							// 		console.log(JSON.stringify(error));
 							// 	});
 							setShowPaymentMethodModal(true);
+							// }
 							// createOrder();
 						}}
 						// disabled={
