@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import {
 	View,
 	StyleSheet,
@@ -10,16 +10,20 @@ import { Icon } from "../components";
 import { Text } from "galio-framework";
 import argonTheme from "../constants/Theme";
 import { CartContext } from "../providers/CartProvider";
+import { ConstantsContext } from "../providers/ConstantsProvider";
 import { FlatList } from "react-native-gesture-handler";
 import { Block } from "galio-framework";
 import { widthPercentageToDP as wp } from "react-native-responsive-screen";
 import ArButton from "../components/Button";
 import { showMessage } from "react-native-flash-message";
 import FastImage from "react-native-fast-image";
-import { DELIVERY_CHARGES, TAX } from "../constants";
+// import { DELIVERY_CHARGES, TAX } from "../constants";
 
 export default function Cart({ navigation }) {
 	const [processing, setProcessing] = useState(false);
+	const { deliveryCharges: DELIVERY_CHARGES, tax: TAX } = useContext(
+		ConstantsContext
+	);
 
 	function ListHeaderComponent({ cart }) {
 		return (
@@ -52,6 +56,7 @@ export default function Cart({ navigation }) {
 	}
 
 	function ListFooterComponent({ cart, total }) {
+		console.log(total + DELIVERY_CHARGES + total * TAX);
 		return (
 			<>
 				<View style={styles.header}>
@@ -63,10 +68,10 @@ export default function Cart({ navigation }) {
 						</Text>
 					</View>
 					<View style={styles.headerRight}>
-						<Text h6>£{DELIVERY_CHARGES.toFixed(2)}</Text>
-						<Text h6>£{(total * TAX).toFixed(2)}</Text>
+						<Text h6>£{Number(DELIVERY_CHARGES).toFixed(2)}</Text>
+						<Text h6>£{Number(total * TAX).toFixed(2)}</Text>
 						<Text h5>
-							£{(total + DELIVERY_CHARGES + total * TAX).toFixed(2)}
+							£{Number(total + DELIVERY_CHARGES + total * TAX).toFixed(2)}
 						</Text>
 					</View>
 				</View>

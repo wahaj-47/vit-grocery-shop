@@ -11,7 +11,7 @@ import { ScrollView } from "react-native-gesture-handler";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Icon } from "../components";
 import argonTheme from "../constants/Theme";
-import { TAX, DELIVERY_CHARGES } from "../constants";
+// import { TAX, DELIVERY_CHARGES } from "../constants";
 import ArButton from "../components/Button";
 import functions from "@react-native-firebase/functions";
 import firestore from "@react-native-firebase/firestore";
@@ -22,6 +22,7 @@ import firestore from "@react-native-firebase/firestore";
 import { AuthContext } from "../providers/AuthProvider";
 import { showMessage } from "react-native-flash-message";
 import { CartContext } from "../providers/CartProvider";
+import { ContantsContext } from "../providers/ConstantsProvider";
 import Modal from "react-native-modal";
 import WebView from "react-native-webview";
 import { heightPercentageToDP } from "react-native-responsive-screen";
@@ -39,6 +40,9 @@ stripe.setOptions({
 });
 
 export default function ShippingDetails({ navigation, route }) {
+	const { deliveryCharges: DELIVERY_CHARGES, tax: TAX } = useContext(
+		ContantsContext
+	);
 	const { total } = route.params;
 	const [shippingAddress, setShippingAddress] = useState({
 		country: "Zimbabwe",

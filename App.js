@@ -10,28 +10,31 @@ import { AuthProvider, AuthContext } from "./providers/AuthProvider";
 import FlashMessage from "react-native-flash-message";
 import { HamperProvider } from "./providers/HamperProvider";
 import { CartProvider } from "./providers/CartProvider";
+import { ConstantsProvider } from "./providers/ConstantsProvider";
 
 export default function App() {
 	return (
 		<>
 			<StatusBar style="dark"></StatusBar>
 			<AuthProvider>
-				<HamperProvider>
-					<CartProvider>
-						<NavigationContainer>
-							<AuthContext.Consumer>
-								{({ initializing, user }) =>
-									!initializing && user && user?.emailVerified ? (
-										<RootDrawer></RootDrawer>
-									) : (
-										<AuthStack></AuthStack>
-									)
-								}
-							</AuthContext.Consumer>
-						</NavigationContainer>
-						<FlashMessage></FlashMessage>
-					</CartProvider>
-				</HamperProvider>
+				<ConstantsProvider>
+					<HamperProvider>
+						<CartProvider>
+							<NavigationContainer>
+								<AuthContext.Consumer>
+									{({ initializing, user }) =>
+										!initializing && user && user?.emailVerified ? (
+											<RootDrawer></RootDrawer>
+										) : (
+											<AuthStack></AuthStack>
+										)
+									}
+								</AuthContext.Consumer>
+							</NavigationContainer>
+							<FlashMessage></FlashMessage>
+						</CartProvider>
+					</HamperProvider>
+				</ConstantsProvider>
 			</AuthProvider>
 		</>
 	);

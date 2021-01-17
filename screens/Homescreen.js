@@ -6,14 +6,17 @@ import { Text } from "galio-framework";
 import argonTheme from "../constants/Theme";
 import { HamperContext } from "../providers/HamperProvider";
 import { CartContext } from "../providers/CartProvider";
+import { ConstantsContext } from "../providers/ConstantsProvider";
 import logo from "../assets/imgs/logo-2.png";
 import { widthPercentageToDP } from "react-native-responsive-screen";
 
 export default function Homescreen({ navigation }) {
 	const { getHampers } = useContext(HamperContext);
+	const { getConstants } = useContext(ConstantsContext);
 
 	useEffect(() => {
 		getHampers();
+		getConstants();
 	}, []);
 
 	function ListHeaderComponent() {
