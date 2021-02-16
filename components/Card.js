@@ -57,9 +57,11 @@ class Card extends React.Component {
 					<Block flex space="between" style={styles.cardDescription}>
 						<Block flex row space="between">
 							<SharedElement id={`item.${item.id}.title`}>
-								<Text bold h5 style={styles.cardTitle}>
-									{item.title}
-								</Text>
+								<Block style={{ maxWidth: "80%" }}>
+									<Text numberOfLines={1} bold h5 style={styles.cardTitle}>
+										{item.title}
+									</Text>
+								</Block>
 							</SharedElement>
 							<SharedElement id={`item.${item.id}.price`}>
 								<Text h5 style={styles.cardTitle}>

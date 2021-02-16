@@ -22,7 +22,7 @@ import firestore from "@react-native-firebase/firestore";
 import { AuthContext } from "../providers/AuthProvider";
 import { showMessage } from "react-native-flash-message";
 import { CartContext } from "../providers/CartProvider";
-import { ContantsContext } from "../providers/ConstantsProvider";
+import { ConstantsContext } from "../providers/ConstantsProvider";
 import Modal from "react-native-modal";
 import WebView from "react-native-webview";
 import { heightPercentageToDP } from "react-native-responsive-screen";
@@ -41,7 +41,7 @@ stripe.setOptions({
 
 export default function ShippingDetails({ navigation, route }) {
 	const { deliveryCharges: DELIVERY_CHARGES, tax: TAX } = useContext(
-		ContantsContext
+		ConstantsContext
 	);
 	const { total } = route.params;
 	const [shippingAddress, setShippingAddress] = useState({
@@ -345,24 +345,23 @@ export default function ShippingDetails({ navigation, route }) {
 								zipcode,
 								phone,
 							} = shippingAddress;
-							// if (
-							// 	name?.length > 0 &&
-							// 	address?.length > 0 &&
-							// 	city?.length > 0 &&
-							// 	zipcode?.length > 0 &&
-							// 	phone?.length > 0
-							// ) {
-							setProcessing(true);
-							// functions()
-							// 	.httpsCallable("createClientToken")()
-							// 	.then((response) => {
-							// 		makePayment(response.data.clientToken, total);
-							// 	})
-							// 	.catch((error) => {
-							// 		console.log(JSON.stringify(error));
-							// 	});
-							setShowPaymentMethodModal(true);
-							// }
+							if (
+								name?.length > 0 &&
+								address?.length > 0 &&
+								city?.length > 0 &&
+								phone?.length > 0
+							) {
+								setProcessing(true);
+								// functions()
+								// 	.httpsCallable("createClientToken")()
+								// 	.then((response) => {
+								// 		makePayment(response.data.clientToken, total);
+								// 	})
+								// 	.catch((error) => {
+								// 		console.log(JSON.stringify(error));
+								// 	});
+								setShowPaymentMethodModal(true);
+							}
 							// createOrder();
 						}}
 						// disabled={

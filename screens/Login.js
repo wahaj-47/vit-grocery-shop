@@ -13,6 +13,7 @@ import argonTheme from "../constants/Theme";
 import { AuthContext } from "../providers/AuthProvider";
 import logo from "../assets/imgs/logo-2.png";
 import { widthPercentageToDP } from "react-native-responsive-screen";
+import { showMessage } from "react-native-flash-message";
 
 export default function Login({ navigation }) {
 	const [email, setEmail] = useState("");
@@ -63,7 +64,19 @@ export default function Login({ navigation }) {
 					<Button
 						style={styles.btn}
 						onPress={() => {
-							signIn(email, password);
+							if (email && password) signIn(email, password);
+							else if (email)
+								showMessage({
+									message: "Password is missing",
+									type: "danger",
+									duration: 5000,
+								});
+							else
+								showMessage({
+									message: "Email is missing",
+									type: "danger",
+									duration: 5000,
+								});
 						}}
 						color="button_color"
 					>

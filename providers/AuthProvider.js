@@ -17,30 +17,40 @@ export function AuthProvider(props) {
 	}
 
 	function signIn(email, password) {
-		setIsLoading(true);
-		auth()
-			.signInWithEmailAndPassword(email, password)
-			.then(async (res) => {
-				if (!res.user.emailVerified) {
-					await sendVerificationEmail();
+		try {
+			setIsLoading(true);
+			auth()
+				.signInWithEmailAndPassword(email, password)
+				.then(async (res) => {
+					if (!res.user.emailVerified) {
+						await sendVerificationEmail();
+						showMessage({
+							message: "Email not verified",
+							description: "We have sent a verification link to your email",
+							type: "warning",
+							duration: 5000,
+						});
+					}
+					setIsLoading(false);
+				})
+				.catch((err) => {
+					console.log(err);
 					showMessage({
-						message: "Email not verified",
-						description: "We have sent a verification link to your email",
-						type: "warning",
+						message: err.message,
+						type: "danger",
 						duration: 5000,
 					});
-				}
-				setIsLoading(false);
-			})
-			.catch((err) => {
-				console.log(err);
-				showMessage({
-					message: err.message,
-					type: "danger",
-					duration: 5000,
+					setIsLoading(false);
 				});
-				setIsLoading(false);
+		} catch (error) {
+			console.log(err);
+			showMessage({
+				message: err.message,
+				type: "danger",
+				duration: 5000,
 			});
+			setIsLoading(false);
+		}
 	}
 
 	async function signUp(email, password, name) {
