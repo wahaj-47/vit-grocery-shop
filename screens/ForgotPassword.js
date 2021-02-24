@@ -10,6 +10,7 @@ import { FlatList } from "react-native-gesture-handler";
 import { Text } from "galio-framework";
 import argonTheme from "../constants/Theme";
 import { AuthContext } from "../providers/AuthProvider";
+import { showMessage } from "react-native-flash-message";
 
 export default function SignUp({ navigation }) {
 	const [email, setEmail] = useState("");
@@ -34,7 +35,12 @@ export default function SignUp({ navigation }) {
 					<Button
 						style={styles.btn}
 						onPress={() => {
-							resetPassword(email);
+							if (email) resetPassword(email);
+							else
+								showMessage({
+									message: "Email missing",
+									type: "danger",
+								});
 						}}
 						color="button_color"
 					>

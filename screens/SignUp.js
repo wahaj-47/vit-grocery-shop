@@ -13,6 +13,7 @@ import argonTheme from "../constants/Theme";
 import { AuthContext } from "../providers/AuthProvider";
 import logo from "../assets/imgs/logo-2.png";
 import { widthPercentageToDP } from "react-native-responsive-screen";
+import { showMessage } from "react-native-flash-message";
 
 export default function SignUp({ navigation }) {
 	const [name, setName] = useState("");
@@ -61,7 +62,12 @@ export default function SignUp({ navigation }) {
 					<Button
 						style={styles.btn}
 						onPress={() => {
-							signUp(email, password, name);
+							if (email && password && name) signUp(email, password, name);
+							else
+								showMessage({
+									message: "Information missing",
+									type: "danger",
+								});
 						}}
 						color="button_color"
 					>

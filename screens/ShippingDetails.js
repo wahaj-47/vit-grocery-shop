@@ -403,9 +403,9 @@ export default function ShippingDetails({ navigation, route }) {
 						paddingHorizontal: 20,
 					}}
 				>
-					<Text h5 style={{ paddingVertical: 20 }}>
+					{/* <Text h5 style={{ paddingVertical: 20 }}>
 						Pay by card
-					</Text>
+					</Text> */}
 					{/* <Input
 						placeholderTextColor="grey"
 						placeholder="Card holder name"
@@ -413,14 +413,14 @@ export default function ShippingDetails({ navigation, route }) {
 							handleTextChange(value, "cardName");
 						}}
 					></Input> */}
-					<View style={{}}>
-						{/* <CreditCardInput
+					{/* <View> */}
+					{/* <CreditCardInput
 							requiresName
 							allowScroll
 							onChange={handleCreditCardInput}
 						/> */}
 
-						<Input
+					{/* <Input
 							value={card.name}
 							placeholderTextColor="grey"
 							placeholder="Cardholder Name"
@@ -492,7 +492,7 @@ export default function ShippingDetails({ navigation, route }) {
 					</ArButton>
 					<Text h5 style={{ paddingVertical: 20, alignSelf: "center" }}>
 						Or
-					</Text>
+					</Text> */}
 					<ArButton
 						onPress={() => {
 							setShowPaymentMethodModal(false);
